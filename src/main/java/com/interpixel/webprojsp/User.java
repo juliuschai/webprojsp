@@ -1,3 +1,4 @@
+package com.interpixel.webprojsp;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +36,7 @@ public class User {
 
             st.setString(1, name);
             st.setString(2, email);
-            st.setString(3, PassHelper.getMd5(pass));
+            st.setString(3, WebUtil.getMd5(pass));
             st.executeUpdate();
 
             st.close();

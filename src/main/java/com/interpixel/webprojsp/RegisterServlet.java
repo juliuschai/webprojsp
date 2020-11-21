@@ -1,9 +1,10 @@
+package com.interpixel.webprojsp;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,6 +74,10 @@ public class RegisterServlet extends HttpServlet {
         }
         if (email.length() > 254) {
             session.setAttribute("error1", "Email over 254 characters");
+            return true;
+        }
+        if (WebUtil.isValidEmailAddress(email)) {
+            session.setAttribute("error1", "Email format invalid");
             return true;
         }
         if (User.checkEmail(email)) {

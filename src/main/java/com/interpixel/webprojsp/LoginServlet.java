@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
             // get request parameters for userID and password
             String user = request.getParameter("user");
             String pass = request.getParameter("pass");
-            
+
             if (userID.equals(user) && password.equals(pass)) {
                 Cookie loginCookie = new Cookie("user", user);
                 //setting cookie to expiry in 30 mins
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                 out.println("<font color=red>Either user name or password is wrong.</font>");
                 rd.include(request, response);
             }
-        } 
+        }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
