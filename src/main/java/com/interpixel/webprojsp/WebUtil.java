@@ -5,8 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.*;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,7 +19,7 @@ public class WebUtil {
 
     /**
      * Get the MD5 hash from a string
-     * 
+     *
      * @param input string to hash
      * @return hashed string
      * @author: https://www.geeksforgeeks.org/md5-hash-in-java/
@@ -56,31 +54,14 @@ public class WebUtil {
      *
      * @param emailIn email to check
      * @return true if email is valid
-     * @author http://www.javapractices.com/topic/TopicAction.do?Id=180
+     * @author https://blog.mailtrap.io/java-email-validation/
      */
     public static boolean isValidEmailAddress(String emailIn) {
-        if (emailIn == null) {
-            return false;
-        }
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(emailIn);
-            if (!hasNameAndDomain(emailIn)) {
-                result = false;
-            }
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
-    }
-
-    private static boolean hasNameAndDomain(String aEmailAddress) {
-        String[] tokens = aEmailAddress.split("@");
-        return tokens.length == 2 && textHasContent(tokens[0]) && textHasContent(tokens[1]);
-    }
-
-    public static boolean textHasContent(String aText) {
-        return (aText != null) && (aText.trim().length() > 0);
+        final String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        //initialize the Pattern object
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(emailIn);
+        return matcher.matches();
     }
 
 }

@@ -13,10 +13,26 @@
     </head>
     <body>
         <h2>Register</h2>
-        <% String errMsg = (String) session.getAttribute("error1");%>
-        <% if (errMsg != null) {%>
-        <div style="color:red;"> <%= errMsg%> </div>
-        <% }%>
+        <%
+            // if user is logged in, redirect to home page
+            String email = (String) session.getAttribute("email");
+            if (email != null) {
+                response.sendRedirect("Home.jsp");
+                return;
+
+            }
+        %>
+
+        <%
+            // show errors if any exist
+            String errMsg = (String) session.getAttribute("error1");
+            if (errMsg != null) {
+        %>
+        <div style ="color:red;"> <%= errMsg%> </div>
+        <%
+                session.removeAttribute("error1");
+            }
+        %>
         <form action="RegisterServlet" method="post">
             Name:<input type="text" name="name">
             <br>

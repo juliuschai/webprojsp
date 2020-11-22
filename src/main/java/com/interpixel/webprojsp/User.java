@@ -16,6 +16,21 @@ import java.sql.SQLException;
  */
 public class User {
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public String name;
+    public String email;
     /**
      * Create user in database
      *
@@ -82,5 +97,38 @@ public class User {
             e.printStackTrace();
         }
         return false;
+    }
+
+    static User login(String email, String pass) {
+        try {
+            Connection con = DatabaseConnection.initializeDatabase();
+            PreparedStatement st = con.prepareStatement("SELECT * FROM users "
+                    + "WHERE email = ? AND pass = ?");
+
+            st.setString(1, email);
+            st.setString(2, WebUtil.getMd5(pass));
+            ResultSet rs = st.executeQuery();
+
+            rs.next();
+            String name = rs.getString(2);
+
+            User user;
+            if (name == null) {
+                user = null;
+            } else {
+                user = new User(name, email);
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+            
+            return user;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

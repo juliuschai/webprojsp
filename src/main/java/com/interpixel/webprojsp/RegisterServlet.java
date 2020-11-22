@@ -6,6 +6,8 @@ package com.interpixel.webprojsp;
  * and open the template in the editor.
  */
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,14 +35,18 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         if (request.getMethod().equals("POST")) {
             if (validateInput(request, response)) {
+                // if input is invalid
                 response.sendRedirect("Register.jsp");
-            } else {
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                String pass = request.getParameter("pass");
-                User.register(name, email, pass);
-                response.sendRedirect("Login.jsp");
+                return;
             }
+            // if input is valid
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String pass = request.getParameter("pass");
+
+            // Register the user to the database
+            User.register(name, email, pass);
+            response.sendRedirect("Login.jsp");
             return;
         }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -60,32 +66,45 @@ public class RegisterServlet extends HttpServlet {
         String conPass = request.getParameter("conPass");
 
         HttpSession session = request.getSession();
+        // Check if required input is empty
         if (name.equals("")) {
             session.setAttribute("error1", "Name required");
-            return true;
-        }
-        if (name.length() > 254) {
-            session.setAttribute("error1", "Name over 254 characters");
             return true;
         }
         if (email.equals("")) {
             session.setAttribute("error1", "Email required");
             return true;
         }
+        if (pass.equals("")) {
+            session.setAttribute("error1", "Password is empty!");
+            return true;
+        }
+        if (conPass.equals("")) {
+            session.setAttribute("error1", "Confirm Password is empty!");
+            return true;
+        }
+        // Check if password and confirm password match
+        if (!pass.equals(conPass)) {
+            request.getSession().setAttribute("error1", "Password mismatch");
+            return true;
+        }
+        // Check if name and length is over character limit
+        if (name.length() > 254) {
+            session.setAttribute("error1", "Name over 254 characters");
+            return true;
+        }
         if (email.length() > 254) {
             session.setAttribute("error1", "Email over 254 characters");
             return true;
         }
-        if (WebUtil.isValidEmailAddress(email)) {
+        // Check if email is in proper format
+        if (!WebUtil.isValidEmailAddress(email)) {
             session.setAttribute("error1", "Email format invalid");
             return true;
         }
-        if (User.checkEmail(email)) {
+        // check if email is not registered in database
+        if (!User.checkEmail(email)) {
             session.setAttribute("error1", "Email already registered");
-            return true;
-        }
-        if (!pass.equals(conPass)) {
-            request.getSession().setAttribute("error1", "Password mismatch");
             return true;
         }
         return false;

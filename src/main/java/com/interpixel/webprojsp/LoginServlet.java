@@ -10,10 +10,10 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,24 +38,65 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getMethod().equals("POST")) {
-            // get request parameters for userID and password
-            String user = request.getParameter("user");
+            // if input is invalid
+            if (validateInput(request, response)) {
+                response.sendRedirect("Login.jsp");
+                return;
+            }
+            String email = request.getParameter("email");
             String pass = request.getParameter("pass");
 
-            if (userID.equals(user) && password.equals(pass)) {
-                Cookie loginCookie = new Cookie("user", user);
-                //setting cookie to expiry in 30 mins
-                loginCookie.setMaxAge(30 * 60);
-                response.addCookie(loginCookie);
-                response.sendRedirect("LoginSuccess.jsp");
-            } else {
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-                PrintWriter out = response.getWriter();
-                out.println("<font color=red>Either user name or password is wrong.</font>");
-                rd.include(request, response);
+            // Attempt to login
+            User user = User.login(email, pass);
+            // Login failed
+            if (user == null) {
+                request.getSession().setAttribute("error1", "Email or password not found");
+                response.sendRedirect("Login.jsp");
+                return;
             }
+
+            // Login successful
+            HttpSession session = request.getSession();
+            session.setAttribute("name", user.getName());
+            session.setAttribute("email", user.getEmail());
+
+            response.sendRedirect("Home.jsp");
+            return;
         }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    /**
+     * Validate inputs
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @return true if there exists an error
+     */
+    private boolean validateInput(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String email = request.getParameter("email");
+        String pass = request.getParameter("pass");
+        HttpSession session = request.getSession();
+        // Check if required input is empty
+        if (email.equals("")) {
+            session.setAttribute("error1", "Email required");
+            return true;
+        }
+        if (pass.equals("")) {
+            session.setAttribute("error1", "Password is empty!");
+            return true;
+        }
+        // Check if name and length is over character limit
+        if (email.length() > 254) {
+            session.setAttribute("error1", "Email over 254 characters");
+            return true;
+        }
+        // Check if email is in proper format
+        if (!WebUtil.isValidEmailAddress(email)) {
+            session.setAttribute("error1", "Email format invalid");
+            return true;
+        }
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
