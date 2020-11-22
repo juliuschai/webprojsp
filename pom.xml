@@ -56,6 +56,7 @@
                 <version>2.1</version>
                 <executions>
                     <execution>
+                        <id>javaee-endorsed-api</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy</goal>
@@ -69,6 +70,23 @@
                                     <artifactId>javaee-endorsed-api</artifactId>
                                     <version>6.0</version>
                                     <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>webapp-runner</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>9.0.38.0</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
