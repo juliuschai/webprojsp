@@ -24,13 +24,19 @@ public class User {
         return name;
     }
 
-    public User(String name, String email) {
+    public int getId() {
+        return id;
+    }
+
+    public User(int id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
     }
 
     public String name;
     public String email;
+    public int id;
     /**
      * Create user in database
      *
@@ -110,13 +116,14 @@ public class User {
             ResultSet rs = st.executeQuery();
 
             rs.next();
+            int id = rs.getInt(1);
             String name = rs.getString(2);
 
             User user;
             if (name == null) {
                 user = null;
             } else {
-                user = new User(name, email);
+                user = new User(id, name, email);
             }
 
             rs.close();
