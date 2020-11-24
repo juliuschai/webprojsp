@@ -14,6 +14,7 @@ import java.sql.SQLException;
  *
  * @author Julius
  */
+
 public class User {
 
     public String getEmail() {
