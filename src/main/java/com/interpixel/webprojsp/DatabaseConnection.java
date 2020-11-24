@@ -16,7 +16,7 @@ public class DatabaseConnection {
             throws SQLException, ClassNotFoundException {
         // Initialize all the information regarding 
         // Database Connection 
-        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
         // Database name to access 
         String dbUsername = "root";
         String dbPassword = "";
