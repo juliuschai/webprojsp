@@ -42,16 +42,17 @@ public class Question {
      * @throws SQLException if a servlet-specific error occurs
      * @throws ClassNotFoundException if a servlet-specific error occurs
      */
-    static boolean create(String title, String description) {
+    static boolean create(String title, String description, int user_id) {
         System.out.println("CreateQuestion");
         try {
             Connection con = DatabaseConnection.initializeDatabase();
             PreparedStatement st = con.prepareStatement("insert into "
-                    + "questions(title,description) "
-                    + "values (?, ?)");
+                    + "questions(title,description,user_id) "
+                    + "values (?, ?, ?)");
 
             st.setString(1, title);
             st.setString(2, description);
+            st.setInt(3, user_id);
             st.executeUpdate();
 
             st.close();

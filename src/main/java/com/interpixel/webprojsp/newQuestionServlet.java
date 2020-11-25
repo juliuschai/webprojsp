@@ -43,10 +43,11 @@ public class newQuestionServlet extends HttpServlet {
             // if input is valid
             String title = request.getParameter("title");
             String description = request.getParameter("description");
-           
+           HttpSession session = request.getSession();
+           int user_id = (Integer) session.getAttribute("id");
 
             // Register the user to the database
-            Question.create(title, description);
+            Question.create(title, description,user_id);
             response.sendRedirect("NewQuestion.jsp");
             return;
         }
