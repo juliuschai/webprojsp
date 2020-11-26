@@ -15,17 +15,29 @@
     </head>
     <body>
         <div class="container">
-            <h2 class="text-center mb-3">New Answer</h2>
-            <a href="Forum.jsp" class="btn btn-link my-3">Back</a>
-            
-            <form action="NewAnswerServlet" method="post">
-                <div class="form-group">
-                    <label for="inputAnswer">Answer</label>
-                    <textarea name="answer" class="form-control" id="inputAnswer" placeholder="Enter your answer here" rows="3"></textarea>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <div class="card my-5">
+                        <div class="card-body">
+                            <div class="row"> 
+                                <div class="col">
+                                    <h2 class="text-center mb-3">New Answer</h2>
+                                    <a href="Forum.jsp">← Back</a>
+
+                                    <form action="NewAnswerServlet" method="post">
+                                        <div class="form-group">
+                                            <label for="inputAnswer">Answer</label>
+                                            <textarea name="answer" class="form-control" id="inputAnswer" placeholder="Enter your answer here" rows="3"></textarea>
+                                        </div>
+                                        <input type="hidden" id="question_id" name="question_id" value="<%= request.getParameter("question") %>">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="hidden" id="question_id" name="question_id" value="<%= request.getParameter("question") %>">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            </div>
         </div>
         
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

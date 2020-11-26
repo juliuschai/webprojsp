@@ -19,77 +19,85 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </head>
     <body>
-        <h2>View Answer</h2>
-        <%  
-            String question = request.getParameter("question");
-            String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
-            // Database name to access 
-            String dbUsername = "root";
-            String dbPassword = "";
-            Connection con = null;
-            Statement stat = null;
-            ResultSet res = null;
+        <div class="container">
+            <div class="row">
+                <div class="col mx-auto">
+                    <div class="card my-5">
+                        <div class="card-body">
+                            <div class="row"> 
+                                <div class="col">
+                                    <h2 class="text-center my-5">View Answer</h2>
+                                    <%  
+                                        String question = request.getParameter("question");
+                                        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
+                                        // Database name to access 
+                                        String dbUsername = "root";
+                                        String dbPassword = "";
+                                        Connection con = null;
+                                        Statement stat = null;
+                                        ResultSet res = null;
 
-            Class.forName("com.mysql.jdbc.Driver"); 
-            con = DriverManager.getConnection(dbURL,
-                    dbUsername, dbPassword);
+                                        Class.forName("com.mysql.jdbc.Driver"); 
+                                        con = DriverManager.getConnection(dbURL,
+                                                dbUsername, dbPassword);
 
-            stat = con.createStatement();
-            String data = "select * from questions where id = " + question;
-            res = stat.executeQuery(data);
+                                        stat = con.createStatement();
+                                        String data = "select * from questions where id = " + question;
+                                        res = stat.executeQuery(data);
 
-            while(res.next()){  
-        %>
-            <h5>Title: <%=res.getString("title")%></h5>
-            <h5>Description: <%=res.getString("description")%></h5>
-            <a href="Forum.jsp" class="btn btn-link">Back</a>
-            <a href="NewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-primary">Add New Answer</a>
-        <%}%>
-        <table>
-                <%  
-                    dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
-                    // Database name to access 
-                    dbUsername = "root";
-                    dbPassword = "";
-                    con = null;
-                    stat = null;
-                    res = null;
+                                        while(res.next()){  
+                                    %>
+                                    <a href="Forum.jsp">← Back</a>
+                                    <h5 class="mt-5">Title: <p class="text-secondary"><%=res.getString("title")%></p></h5>
+                                    <h5 class="mb-5">Description: <p class="text-secondary"><%=res.getString("description")%></p></h5>
+                                    <a href="NewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-primary mb-5">Add New Answer</a>
+                                    <%}%>
+                                    <table>
+                                            <%  
+                                                dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
+                                                // Database name to access 
+                                                dbUsername = "root";
+                                                dbPassword = "";
+                                                con = null;
+                                                stat = null;
+                                                res = null;
 
-                    Class.forName("com.mysql.jdbc.Driver"); 
-                    con = DriverManager.getConnection(dbURL,
-                            dbUsername, dbPassword);
-                    
-                    stat = con.createStatement();
-                    data = "select * from answers where question_id = " + question;
-                    res = stat.executeQuery(data);
-                    
-                    while(res.next()){
-                %>
-                <tr>
-                    <td>Id: <%=res.getString("id")%></td>
-                </tr>
-                <tr>
-                    <td>User Id: <%=res.getString("user_id")%></td>
-                </tr>
-                <tr>
-                    <td>Answer: <%=res.getString("answer")%></td>
-                </tr>
-                <% 
-                    int uid = Integer.parseInt(res.getString("user_id"));
-                    int sid = (Integer) session.getAttribute("id");
-                    if (uid == sid) { %>
-                <tr>
-                    <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-success">Update Answers</a></td>
-                </tr>
-                <tr>
-                    <td><a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger">Delete Answers</a></td>
-                </tr>
-                <% } %>
-                <tr>
-                    <td> <br> </td>
-                </tr>
-                <%}%>
-        </table>
+                                                Class.forName("com.mysql.jdbc.Driver"); 
+                                                con = DriverManager.getConnection(dbURL,
+                                                        dbUsername, dbPassword);
+
+                                                stat = con.createStatement();
+                                                data = "select * from answers where question_id = " + question;
+                                                res = stat.executeQuery(data);
+
+                                                while(res.next()){
+                                            %>
+                                            <tr>
+                                                <td>User Id: <p class="text-secondary"><%=res.getString("user_id")%></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Answer: <p class="text-secondary"><%=res.getString("answer")%></p></td>
+                                            </tr>
+                                            <% 
+                                                int uid = Integer.parseInt(res.getString("user_id"));
+                                                int sid = (Integer) session.getAttribute("id");
+                                                if (uid == sid) { %>
+                                            <tr>
+                                                <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-secondary">Update</a><a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger ml-1">Delete</a></td>
+                                            </tr>
+                                            <%}%>
+                                            <tr>
+                                                <td> <br> </td>
+                                            </tr>
+                                            <%}%>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

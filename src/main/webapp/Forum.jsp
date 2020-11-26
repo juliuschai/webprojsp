@@ -19,49 +19,62 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </head>
     <body>
-        <div class="container"> 
-            <h2 class="text-center my-5">Forum</h2>
-            <div class="text-center mt-3 mb-5">
-                <a href="NewQuestion.jsp" class="btn btn-primary mb-3">Add New Question</a>
-                <a href="MyQuestions.jsp" class="btn btn-danger mb-3">My Questions</a>
-            </div>
-            <table >
-                    <%  
-                        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
-                        // Database name to access 
-                        String dbUsername = "root";
-                        String dbPassword = "";
-                        Connection con = null;
-                        Statement stat = null;
-                        ResultSet res = null;
+        <div class="container">
+            <div class="row">
+                <div class="col mx-auto">
+                    <div class="card my-5">
+                        <div class="card-body">
+                            <div class="row"> 
+                                <div class="col">
+                                    <h2 class="text-center my-5">Forum</h2>
+                                    <a href="Home.jsp" class="mb-3">← Back</a>
+                                    <div class="my-3">
+                                        <a href="NewQuestion.jsp" class="btn btn-primary mb-3">Add New Question</a>
+                                        <a href="MyQuestions.jsp" class="btn btn-danger mb-3 ml-1">My Questions</a>
+                                    </div>
+                                    <table >
+                                            <%  
+                                                String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
+                                                // Database name to access 
+                                                String dbUsername = "root";
+                                                String dbPassword = "";
+                                                Connection con = null;
+                                                Statement stat = null;
+                                                ResultSet res = null;
 
-                        Class.forName("com.mysql.jdbc.Driver"); 
-                        con = DriverManager.getConnection(dbURL,
-                                dbUsername, dbPassword);
+                                                Class.forName("com.mysql.jdbc.Driver"); 
+                                                con = DriverManager.getConnection(dbURL,
+                                                        dbUsername, dbPassword);
 
-                        stat = con.createStatement();
-                        String data = "select * from questions";
-                        res = stat.executeQuery(data);
-
-                        while(res.next()){  
-                    %>
-                    <tr>
-                        <td>Id: <%=res.getString("id")%></td>
-                     </tr>
-                     <tr>
-                        <td>Title: <%=res.getString("title")%></td>
-                    </tr>
-                     <tr>
-                        <td><%=res.getString("description")%></td>
-                    </tr>
-                    <tr>
-                        <td><a href="ViewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-success mb-3">View Answers</a></td>
-                    </tr>
-                    <tr>
-                        <td> <br> </td>
-                    </tr>
-                    <%}%>
-            </table>    
+                                                stat = con.createStatement();
+                                                String data = "select * from questions";
+                                                res = stat.executeQuery(data);
+                                                
+                                                while(res.next()){  
+                                            %>
+                                            <tr>
+                                                <td>ID User: <p class="text-secondary"><%=res.getString("user_id")%></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Title: <p class="text-secondary"><%=res.getString("title")%></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Description : <p class="text-secondary"><%=res.getString("description")%></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="ViewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-success mb-3">View Answers</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td> <br> </td>
+                                            </tr>
+                                            <%}%>
+                                    </table>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div
+            </div>                        
         </div>
         
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
