@@ -40,13 +40,14 @@ public class NewAnswerServlet extends HttpServlet {
             }
 
             // if input is valid
+            String question_id = request.getParameter("question_id");
             String answer = request.getParameter("answer");
             HttpSession session = request.getSession();
             int user_id = (Integer) session.getAttribute("id");
 
             // Register the user to the database
-            Answer.create(user_id, answer);
-            response.sendRedirect("NewAnswer.jsp");
+            Answer.create(user_id, question_id, answer);
+            response.sendRedirect("ViewAnswer.jsp?question=" + question_id);
             return;
         }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);

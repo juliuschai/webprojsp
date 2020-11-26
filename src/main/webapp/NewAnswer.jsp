@@ -22,6 +22,7 @@
                     <label for="inputAnswer">Answer</label>
                     <textarea name="answer" class="form-control" id="inputAnswer" placeholder="Enter your answer here" rows="3"></textarea>
                 </div>
+                <input type="hidden" id="question_id" name="question_id" value="<%= request.getParameter("question") %>">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

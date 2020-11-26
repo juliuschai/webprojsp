@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author KresnaAdhiPramana
  */
-class Answer {
+public class Answer {
     public String getAnswer() {
         return answer;
     }
@@ -25,16 +25,17 @@ class Answer {
     
     public String answer;
     
-    static boolean create(int user_id, String answer) {
+    static boolean create(int user_id, String question_id, String answer) {
         System.out.println("CreateAnswer");
         try {
             Connection con = DatabaseConnection.initializeDatabase();
             PreparedStatement st = con.prepareStatement("insert into "
-                    + "answers(user_id, answer) "
-                    + "values (?, ?)");
+                    + "answers(user_id, question_id, answer) "
+                    + "values (?, ?, ?)");
 
             st.setInt(1, user_id);
-            st.setString(2, answer);
+            st.setString(2, question_id);
+            st.setString(3, answer);
             st.executeUpdate();
 
             st.close();

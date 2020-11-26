@@ -17,10 +17,12 @@
             if (uname != null) {
         %>
         <h1>Hello <%= uname%>!</h1>
+        <h5>Welcome to our website</h5>
         <a href="Forum.jsp">Forum</a>
         <a href="LogoutServlet">Logout</a>
         <% } else { %>
         <h1>Hello Guest!</h1>
+        <h5>Please login or register first</h5>
         <a href="Login.jsp">Login</a>
         <a href="Register.jsp">Register</a>
         <% } %>

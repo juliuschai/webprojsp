@@ -19,7 +19,6 @@
     <body>
         <h2>Forum: </h2>
         <a href="NewQuestion.jsp">Add New Question</a>
-        <a href="NewAnswer.jsp">Add New Answer (testing)</a>
         <table>
                 <%  
                    String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
@@ -47,17 +46,15 @@
                     <td>Title: <%=res.getString("title")%></td>
                 </tr>
                  <tr>
-                    <td><%=res.getString("description")%> </td>
+                    <td><%=res.getString("description")%></td>
                 </tr>
                 <tr>
-                    <td><a href="#">View Answers</a></td>
+                    <td><a href="ViewAnswer.jsp?question=<%=res.getString("id")%>">View Answers</a></td>
                 </tr>
                 <tr>
                     <td> <br> </td>
                 </tr>
                 <%}%>
- 
-        </table>
-        
+        </table>    
     </body>
 </html>
