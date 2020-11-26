@@ -26,7 +26,7 @@
                         <div class="card-body">
                             <div class="row"> 
                                 <div class="col">
-                                       <h2 class="text-center my-5">My Questions: </h2>
+                                       <h2 class="text-center my-5">My Questions</h2>
                                        <a href="Forum.jsp">← Back</a>
                                        <br>
                                        <br>
@@ -65,21 +65,12 @@
                                                 <tr>
                                                     <td>
                                                         <a href ='EditQuestion.jsp?qid=<%=res.getString("id")%>' class="btn btn-info"> Edit </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href ='DeleteQuestion.jsp?qid=<%=res.getString("id")%>' class="btn btn-danger" > Delete </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="ViewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-success mb-3">View Answers</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td> <br> </td>
+                                                        <a href ='DeleteQuestion.jsp?qid=<%=res.getString("id")%>' class="btn btn-danger ml-1" > Delete </a>
+                                                        <a href="ViewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-success ml-1">View Answers</a>
+                                                    </td> 
                                                 </tr>
                                                 <%}%>
-
                                         </table>
-                                  
                                 </div>
                             </div>
                         </div>
