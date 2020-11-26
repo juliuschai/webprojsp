@@ -74,12 +74,17 @@
                 <tr>
                     <td>Answer: <%=res.getString("answer")%></td>
                 </tr>
+                <% 
+                    int uid = Integer.parseInt(res.getString("user_id"));
+                    int sid = (Integer) session.getAttribute("id");
+                    if (uid == sid) { %>
                 <tr>
                     <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-success">Update Answers</a></td>
                 </tr>
                 <tr>
                     <td><a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger">Delete Answers</a></td>
                 </tr>
+                <% } %>
                 <tr>
                     <td> <br> </td>
                 </tr>
