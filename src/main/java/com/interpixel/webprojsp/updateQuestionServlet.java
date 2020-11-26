@@ -19,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author eric
  */
-@WebServlet(urlPatterns = {"/newQuestionServlet"})
-public class newQuestionServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateQuestionServlet"})
+public class updateQuestionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +36,21 @@ public class newQuestionServlet extends HttpServlet {
         if (request.getMethod().equals("POST")) {
             if (validateInput(request, response)) {
                 // if input is invalid
-                response.sendRedirect("NewQuestion.jsp");
+                response.sendRedirect("EditQuestion.jsp");
                 return;
             }
 
             // if input is valid
             String title = request.getParameter("title");
             String description = request.getParameter("description");
-           HttpSession session = request.getSession();
-           int user_id = (Integer) session.getAttribute("id");
+            String qid = request.getParameter("id");
+            int num = Integer.parseInt(qid);
+           
+           
 
             // Register the user to the database
-            Question.create(title, description,user_id);
-            response.sendRedirect("Forum.jsp");
+            Question.update(title, description,num);
+            response.sendRedirect("MyQuestions.jsp");
             return;
         }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -64,9 +66,18 @@ public class newQuestionServlet extends HttpServlet {
     private boolean validateInput(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
+        String uid = request.getParameter("user_id");
+        int num_id = Integer.parseInt(uid);
         
 
         HttpSession session = request.getSession();
+        int logged_user = (Integer) session.getAttribute("id");
+        
+        if (num_id != logged_user )
+        {
+            session.setAttribute("error1", "This is not your question!");
+            return true;
+        }
         // Check if required input is empty
         if (title.equals("")) {
             session.setAttribute("error1", "Title required");

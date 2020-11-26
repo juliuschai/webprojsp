@@ -66,5 +66,27 @@ public class Question {
         }
         return false;
     }
+    
+    static boolean update(String title, String description, int qid) {
+        
+        try {
+            Connection con = DatabaseConnection.initializeDatabase();
+            PreparedStatement st = con.prepareStatement( "update questions set title=?, description=? where id='"+qid+"'");
+
+            st.setString(1, title);
+            st.setString(2, description);
+            st.executeUpdate();
+
+            st.close();
+            con.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
