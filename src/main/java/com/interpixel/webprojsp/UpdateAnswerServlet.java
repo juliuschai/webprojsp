@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author KresnaAdhiPramana
  */
-@WebServlet(urlPatterns = {"/NewAnswerServlet"})
-public class NewAnswerServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/UpdateAnswerServlet"})
+public class UpdateAnswerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +35,17 @@ public class NewAnswerServlet extends HttpServlet {
         if (request.getMethod().equals("POST")) {
             if (validateInput(request, response)) {
                 // if input is invalid
-                response.sendRedirect("NewAnswer.jsp");
+                response.sendRedirect("UpdateAnswer.jsp?answer=" + request.getParameter("answer_id"));
                 return;
             }
 
             // if input is valid
+            String answer_id = request.getParameter("answer_id");
             String question_id = request.getParameter("question_id");
             String answer = request.getParameter("answer");
-            HttpSession session = request.getSession();
-            int user_id = (Integer) session.getAttribute("id");
 
             // Register the user to the database
-            Answer.create(user_id, question_id, answer);
+            Answer.update(answer_id, answer);
             response.sendRedirect("ViewAnswer.jsp?question=" + question_id);
             return;
         }

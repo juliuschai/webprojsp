@@ -17,6 +17,7 @@
         <div class="container">
             <h2 class="text-center mb-3">New Answer</h2>
             <a href="Forum.jsp" class="btn btn-link my-3">Back</a>
+            
             <form action="NewAnswerServlet" method="post">
                 <div class="form-group">
                     <label for="inputAnswer">Answer</label>
