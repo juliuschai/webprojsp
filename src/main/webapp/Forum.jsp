@@ -21,6 +21,7 @@
     <body>
         <h2>Forum: </h2>
         <a href="NewQuestion.jsp" class="btn btn-primary">Add New Question</a>
+        <a href="MyQuestions.jsp" class="btn btn-danger">My Questions</a>
         <table>
                 <%  
                    String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
