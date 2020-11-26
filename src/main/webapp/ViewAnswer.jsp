@@ -43,7 +43,7 @@
             <h5>Title: <%=res.getString("title")%></h5>
             <h5>Description: <%=res.getString("description")%></h5>
             <a href="Forum.jsp" class="btn btn-link">Back</a>
-            <a href="NewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-success">Add New Answer</a>
+            <a href="NewAnswer.jsp?question=<%=res.getString("id")%>" class="btn btn-primary">Add New Answer</a>
         <%}%>
         <table>
                 <%  
@@ -75,10 +75,10 @@
                     <td>Answer: <%=res.getString("answer")%></td>
                 </tr>
                 <tr>
-                    <td><a href="UpdateAnswer.jsp" class="btn btn-primary">Update Answers</a></td>
+                    <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-success">Update Answers</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#" class="btn btn-primary">Delete Answers</a></td>
+                    <td><a href="#" class="btn btn-sanger">Delete Answers</a></td>
                 </tr>
                 <tr>
                     <td> <br> </td>
