@@ -55,6 +55,9 @@
                     <td>
                         <a href ='EditQuestion.jsp?qid=<%=res.getString("id")%>' > Edit </a>
                     </td>
+                    <td>
+                        <a href ='DeleteQuestion.jsp?qid=<%=res.getString("id")%>' > Delete </a>
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="#">View Answers</a></td>
