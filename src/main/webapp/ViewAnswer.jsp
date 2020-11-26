@@ -78,7 +78,7 @@
                     <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-success">Update Answers</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#" class="btn btn-sanger">Delete Answers</a></td>
+                    <td><a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger">Delete Answers</a></td>
                 </tr>
                 <tr>
                     <td> <br> </td>
