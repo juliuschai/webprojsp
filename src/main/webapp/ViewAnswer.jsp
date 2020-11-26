@@ -67,13 +67,13 @@
                                                         dbUsername, dbPassword);
 
                                                 stat = con.createStatement();
-                                                data = "select * from answers where question_id = " + question;
+                                                data = "select answers.id,user_id,question_id,answer,name from answers,users where answers.user_id = users.id AND question_id = " + question;
                                                 res = stat.executeQuery(data);
 
                                                 while(res.next()){
                                             %>
                                             <tr>
-                                                <td>User Id: <p class="text-secondary"><%=res.getString("user_id")%></p></td>
+                                                <td>Username: <p class="text-secondary"><%=res.getString("name")%></p></td>
                                             </tr>
                                             <tr>
                                                 <td>Answer: <p class="text-secondary"><%=res.getString("answer")%></p></td>
