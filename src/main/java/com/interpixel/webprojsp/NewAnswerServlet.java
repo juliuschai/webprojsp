@@ -41,9 +41,11 @@ public class NewAnswerServlet extends HttpServlet {
 
             // if input is valid
             String answer = request.getParameter("answer");
+            HttpSession session = request.getSession();
+            int user_id = (Integer) session.getAttribute("id");
 
             // Register the user to the database
-            Answer.create(answer);
+            Answer.create(user_id, answer);
             response.sendRedirect("NewAnswer.jsp");
             return;
         }

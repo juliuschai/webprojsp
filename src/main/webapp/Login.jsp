@@ -32,7 +32,7 @@
                 session.removeAttribute("error1");
             }
         %>
-        <form action="LoginServlet" method="pOST">
+        <form action="LoginServlet" method="POST">
             Email:<input type="email" name="email">
             <br>
             Password: <input type="password" name="pass">

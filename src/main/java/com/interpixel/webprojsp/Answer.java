@@ -25,15 +25,16 @@ class Answer {
     
     public String answer;
     
-    static boolean create(String answer) {
+    static boolean create(int user_id, String answer) {
         System.out.println("CreateAnswer");
         try {
             Connection con = DatabaseConnection.initializeDatabase();
             PreparedStatement st = con.prepareStatement("insert into "
-                    + "answers(answer) "
-                    + "values (?)");
+                    + "answers(user_id, answer) "
+                    + "values (?, ?)");
 
-            st.setString(1, answer);
+            st.setInt(1, user_id);
+            st.setString(2, answer);
             st.executeUpdate();
 
             st.close();

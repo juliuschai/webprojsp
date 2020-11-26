@@ -17,6 +17,7 @@
             if (uname != null) {
         %>
         <h1>Hello <%= uname%>!</h1>
+        <a href="Forum.jsp">Forum</a>
         <a href="LogoutServlet">Logout</a>
         <% } else { %>
         <h1>Hello Guest!</h1>
