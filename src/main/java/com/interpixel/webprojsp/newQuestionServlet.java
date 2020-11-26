@@ -48,7 +48,7 @@ public class newQuestionServlet extends HttpServlet {
 
             // Register the user to the database
             Question.create(title, description,user_id);
-            response.sendRedirect("NewQuestion.jsp");
+            response.sendRedirect("Forum.jsp");
             return;
         }
         response.sendError(HttpServletResponse.SC_NOT_FOUND);

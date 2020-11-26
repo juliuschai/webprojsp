@@ -8,6 +8,8 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="com.interpixel.webprojsp.Question"%>
+<%@page import="javax.servlet.http.HttpSession"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,7 +37,9 @@
                             dbUsername, dbPassword);
                     
                     stat = con.createStatement();
-                    String data = "select * from questions";
+                    
+                    int logged_user = (Integer) session.getAttribute("id");
+                    String data = "select * from questions where user_id='"+logged_user+"'";
                     res = stat.executeQuery(data);
                     
                     while(res.next()){  
