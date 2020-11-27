@@ -1,36 +1,53 @@
 <%-- 
     Document   : DeleteAnswer
     Created on : Nov 26, 2020, 2:53:59 PM
-    Author     : KresnaAdhiPramana
+    Author     : KresnaAdhiPramana, Julius
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.sql.*,java.util.*"%>
 <%
-    String id=request.getParameter("answer");
-    String qid=request.getParameter("question");
-    try
-    {
-        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
-        // Database name to access 
-        String dbUsername = "root";
-        String dbPassword = "";
+    // user must be logged in middleware
+    Integer userId = (Integer) session.getAttribute("id");
+    if (userId == null) {
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+%>
+
+<%
+    String aid = request.getParameter("answer");
+    String qid = request.getParameter("question");
+    try {
+        String dbURL = System.getenv("JDBC_DATABASE_URL");
         Connection con = null;
-        Statement stat = null;
+        PreparedStatement stat = null;
         ResultSet res = null;
 
-        Class.forName("com.mysql.jdbc.Driver"); 
+        Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(dbURL,
                 dbUsername, dbPassword);
 
-        stat = con.createStatement();
-        String data = "delete from answers where id = " + id;
-        int i = stat.executeUpdate(data);
-        out.println("Data Deleted Successfully!");
+        // Owner middleware
+        stat = con.prepareStatement("SELECT user_id FROM answers WHERE id = ?");
+        stat.setString(1, aid);
+        res = stat.executeQuery();
+        
+        res.next();
+        int ownerId = res.getInt(1);
+        
+        if (Integer.valueOf(userId) != ownerId) {
+            response.sendRedirect("Forum.jsp");
+            return;
+        }
+        
+        // delete answer
+        stat = con.prepareStatement("delete from answers where id = ?");
+        stat.setString(1, aid);
+        int i = stat.executeUpdate();
+
         response.sendRedirect("ViewAnswer.jsp?question=" + qid);
-    }
-    catch(Exception e)
-    {
+    } catch (Exception e) {
         System.out.print(e);
         e.printStackTrace();
     }

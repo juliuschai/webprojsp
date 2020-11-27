@@ -1,11 +1,21 @@
 <%-- 
     Document   : NewQuestion
     Created on : Nov 23, 2020, 9:38:51 PM
-    Author     : eric
+    Author     : eric, Julius
 --%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    // user must be logged in middleware
+    Integer userId = (Integer) session.getAttribute("id");
+    if (userId == null) {
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

@@ -1,10 +1,20 @@
 <%-- 
     Document   : NewAnswer
     Created on : Nov 24, 2020, 12:56:38 PM
-    Author     : KresnaAdhiPramana
+    Author     : KresnaAdhiPramana, Julius
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    // user must be logged in middleware
+    Integer userId = (Integer) session.getAttribute("id");
+    if (userId == null) {
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

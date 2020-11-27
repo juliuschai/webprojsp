@@ -16,14 +16,12 @@ public class DatabaseConnection {
             throws SQLException, ClassNotFoundException {
         // Initialize all the information regarding 
         // Database Connection 
-        String dbURL = "jdbc:mysql://localhost:3306/webprojsp?serverTimezone=UTC";
+        String dbURL = System.getenv("JDBC_DATABASE_URL");
+        System.out.println(dbURL);
         // Database name to access 
-        String dbUsername = "root";
-        String dbPassword = "";
 
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection con = DriverManager.getConnection(dbURL,
-                dbUsername, dbPassword);
+        Connection con = DriverManager.getConnection(dbURL);
         return con;
     }
 }

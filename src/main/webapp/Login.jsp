@@ -25,8 +25,8 @@
                                     <a href="Home.jsp" class="mb-3">← Back</a>
                                     <%
                                         // if user is logged in, redirect to home page
-                                        String email = (String) session.getAttribute("email");
-                                        if (email != null) {
+                                        Integer userId = (Integer) session.getAttribute("id");
+                                        if (userId != null) {
                                             response.sendRedirect("Home.jsp");
                                             return;
                                         }
