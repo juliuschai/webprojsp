@@ -25,8 +25,7 @@
         ResultSet res = null;
 
         Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection(dbURL,
-                dbUsername, dbPassword);
+        con = DriverManager.getConnection(dbURL);
 
         // Owner middleware
         stat = con.prepareStatement("SELECT user_id FROM answers WHERE id = ?");
