@@ -4,6 +4,7 @@
     Author     : KresnaAdhiPramana, Julius
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -37,18 +38,17 @@
                                 <div class="col">
                                     <h2 class="text-center my-5">View Answer</h2>
                                     <%
-                                        String question = request.getParameter("question");
+                                        Integer question = Integer.valueOf(request.getParameter("question"));
                                         String dbURL = System.getenv("JDBC_DATABASE_URL");
                                         Connection con = null;
-                                        Statement stat = null;
+                                        PreparedStatement stat = null;
                                         ResultSet res = null;
 
                                         Class.forName("com.mysql.jdbc.Driver");
                                         con = DriverManager.getConnection(dbURL);
 
-                                        stat = con.createStatement();
-                                        String data = "select * from questions where id = " + question;
-                                        res = stat.executeQuery(data);
+                                        stat = con.prepareStatement("select * from questions where id = ?");
+                                        stat.setInt(1, question);
 
                                         while (res.next()) {
                                     %>
@@ -67,9 +67,9 @@
                                             Class.forName("com.mysql.jdbc.Driver");
                                             con = DriverManager.getConnection(dbURL);
 
-                                            stat = con.createStatement();
-                                            data = "select answers.id,user_id,question_id,answer,name from answers,users where answers.user_id = users.id AND question_id = " + question;
-                                            res = stat.executeQuery(data);
+                                            stat = con.prepareStatement("select answers.id,user_id,question_id,answer,name from answers INNER JOIN users ON answers.user_id = users.id AND question_id = ?");
+                                            stat.setInt(1, question);
+                                            res = stat.executeQuery();
 
                                             while (res.next()) {
                                         %>
@@ -89,7 +89,10 @@
                                             System.out.println(sid);
                                             if (uid == sid) {%>
                                         <tr>
-                                            <td><a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-secondary">Update</a><a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger ml-1">Delete</a></td>
+                                            <td>
+                                                <a href="UpdateAnswer.jsp?answer=<%=res.getString("id")%>" class="btn btn-secondary">Update</a>
+                                                <a href="DeleteAnswer.jsp?answer=<%=res.getString("id")%>&question=<%=res.getString("question_id")%>" class="btn btn-danger ml-1">Delete</a>
+                                            </td>
                                         </tr>
                                         <%}%>
                                         <tr>
