@@ -50,7 +50,7 @@ public class Answer {
         return false;
     }
     
-    static boolean update(String answer_id, String answer) {
+    static boolean update(int answer_id, String answer) {
         System.out.println("UpdateAnswer");
         try {
             Connection con = DatabaseConnection.initializeDatabase();
@@ -59,7 +59,7 @@ public class Answer {
                     + "where id = ?");
 
             st.setString(1, answer);
-            st.setString(2, answer_id);
+            st.setInt(2, answer_id);
             st.executeUpdate();
 
             st.close();

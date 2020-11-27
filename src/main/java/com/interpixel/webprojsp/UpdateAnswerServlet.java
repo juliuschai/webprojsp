@@ -40,8 +40,8 @@ public class UpdateAnswerServlet extends HttpServlet {
             }
 
             // if input is valid
-            String answer_id = request.getParameter("answer_id");
-            String question_id = request.getParameter("question_id");
+            int answer_id = Integer.valueOf(request.getParameter("answer_id"));
+            int question_id = Integer.valueOf(request.getParameter("question_id"));
             String answer = request.getParameter("answer");
 
             // Register the user to the database
