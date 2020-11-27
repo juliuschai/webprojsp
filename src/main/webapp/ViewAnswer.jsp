@@ -49,6 +49,7 @@
 
                                         stat = con.prepareStatement("select * from questions where id = ?");
                                         stat.setInt(1, question);
+                                        res = stat.executeQuery();
 
                                         while (res.next()) {
                                     %>
