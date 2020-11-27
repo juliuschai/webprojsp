@@ -34,7 +34,7 @@ public class Answer {
                     + "values (?, ?, ?)");
 
             st.setInt(1, user_id);
-            st.setString(2, question_id);
+            st.setInt(2, question_id);
             st.setString(3, answer);
             st.executeUpdate();
 

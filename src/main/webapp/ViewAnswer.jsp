@@ -68,7 +68,7 @@
                                             Class.forName("com.mysql.jdbc.Driver");
                                             con = DriverManager.getConnection(dbURL);
 
-                                            stat = con.prepareStatement("select answers.id,user_id,question_id,answer,name from answers INNER JOIN users ON answers.user_id = users.id AND question_id = ?");
+                                            stat = con.prepareStatement("select answers.id,user_id,question_id,answer,name from answers INNER JOIN users ON answers.user_id = users.id WHERE question_id = ?");
                                             stat.setInt(1, question);
                                             res = stat.executeQuery();
 
