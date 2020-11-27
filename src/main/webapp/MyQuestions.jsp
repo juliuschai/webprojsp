@@ -45,9 +45,6 @@
                                     <table>
                                         <%
                                             String dbURL = System.getenv("JDBC_DATABASE_URL");
-                                            // Database name to access 
-                                            String dbUsername = "root";
-                                            String dbPassword = "";
                                             Connection con = null;
                                             Statement stat = null;
                                             ResultSet res = null;

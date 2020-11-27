@@ -60,9 +60,6 @@
                                     <table>
                                         <%
                                             dbURL = System.getenv("JDBC_DATABASE_URL");
-                                            // Database name to access 
-                                            dbUsername = "root";
-                                            dbPassword = "";
                                             con = null;
                                             stat = null;
                                             res = null;
