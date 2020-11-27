@@ -25,7 +25,7 @@ public class Answer {
     
     public String answer;
     
-    static boolean create(int user_id, String question_id, String answer) {
+    static boolean create(int user_id, int question_id, String answer) {
         System.out.println("CreateAnswer");
         try {
             Connection con = DatabaseConnection.initializeDatabase();

@@ -40,7 +40,7 @@ public class NewAnswerServlet extends HttpServlet {
             }
 
             // if input is valid
-            String question_id = request.getParameter("question_id");
+            int question_id = Integer.valueOf(request.getParameter("question_id"));
             String answer = request.getParameter("answer");
             HttpSession session = request.getSession();
             int user_id = (Integer) session.getAttribute("id");
