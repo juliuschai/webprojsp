@@ -66,7 +66,6 @@
                                                 return;
                                             }
 
-                                            res.next();
                                         %>
                                         <input type="hidden" name="id" value='<%=res.getString("id")%>' />
                                         <input type="hidden" name="user_id" value='<%=res.getString("user_id")%>' />
@@ -76,7 +75,7 @@
                                         <br>
                                         <input type="submit" value="Update" class="btn btn-success mb-3">
                                     </form>
-                                    <% }%>
+                                   
 
 
                                 </div>

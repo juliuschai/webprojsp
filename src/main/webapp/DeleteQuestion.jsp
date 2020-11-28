@@ -16,6 +16,7 @@
 
 <%
     String qid = request.getParameter("qid");
+    int num = Integer.parseInt(qid);
     String dbURL = System.getenv("JDBC_DATABASE_URL");
     Connection con = null;
     Class.forName("com.mysql.jdbc.Driver");
@@ -25,7 +26,7 @@
 
     // Owner middleware
     stat = con.prepareStatement("SELECT user_id FROM questions WHERE id = ?");
-    stat.setString(1, qid);
+    stat.setInt(1, num);
     res = stat.executeQuery();
 
     res.next();
@@ -38,7 +39,7 @@
 
     // delete answer
     stat = con.prepareStatement("delete from questions where id= ?");
-    stat.setString(1, qid);
+    stat.setInt(1, num);
     int i = stat.executeUpdate();
 
     response.sendRedirect("MyQuestions.jsp");

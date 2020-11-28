@@ -17,6 +17,7 @@
 
 <%
     String aid = request.getParameter("answer");
+     int num = Integer.parseInt(aid);
     String qid = request.getParameter("question");
     try {
         String dbURL = System.getenv("JDBC_DATABASE_URL");
@@ -29,7 +30,7 @@
 
         // Owner middleware
         stat = con.prepareStatement("SELECT user_id FROM answers WHERE id = ?");
-        stat.setString(1, aid);
+        stat.setInt(1, num);
         res = stat.executeQuery();
         
         res.next();
@@ -42,7 +43,7 @@
         
         // delete answer
         stat = con.prepareStatement("delete from answers where id = ?");
-        stat.setString(1, aid);
+        stat.setInt(1, num);
         int i = stat.executeUpdate();
 
         response.sendRedirect("ViewAnswer.jsp?question=" + qid);
